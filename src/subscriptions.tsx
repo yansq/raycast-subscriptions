@@ -1,6 +1,7 @@
 import { ActionPanel, Action, Icon, List } from "@raycast/api"
 import { useSubList } from "./useSubList"
 import SubDetail from "./subDetail"
+import { getNextPaymentDate } from "./utils"
 
 export default function Command() {
   const subList = useSubList()
@@ -22,7 +23,7 @@ export default function Command() {
         <List.Item
           key={item.id}
           title={item.name}
-          subtitle={item.cycle}
+          subtitle={`${item.cycle} ${getNextPaymentDate(item).toISOString().slice(0, 10)}`}
           accessories={[{ icon: Icon.Coins, text: item.price.toString() }]}
           actions={
             <ActionPanel>
