@@ -1,14 +1,13 @@
-import { ActionPanel, Action, Detail, Icon, useNavigation } from "@raycast/api"
-import { useSubList } from "./useSubList"
-import { getNextPaymentDate } from "./utils"
-import type { Subscription } from "./types"
+import { ActionPanel, Action, Detail, Icon, useNavigation } from "@raycast/api";
+import { useSubList } from "./useSubList";
+import { getNextPaymentDate } from "./utils";
+import type { Subscription } from "./types";
 
 export default function SubDetail({ sub }: { sub: Subscription }) {
-  const subList = useSubList()
+  const subList = useSubList();
   const { pop } = useNavigation();
 
-  const markdown =
-    `
+  const markdown = `
 # ${sub.name}
 #### Price: ${sub.price}
 #### Cycle: ${sub.cycle}
@@ -16,7 +15,7 @@ export default function SubDetail({ sub }: { sub: Subscription }) {
 #### Next Payment Date: ${getNextPaymentDate(sub).toISOString().slice(0, 10)}
 #### Auto Renew: ${sub.autoRenew}
 #### Website: ${sub.website}
-`
+`;
 
   return (
     <Detail
@@ -29,13 +28,13 @@ export default function SubDetail({ sub }: { sub: Subscription }) {
             title="Remove"
             style={Action.Style.Destructive}
             onAction={() => {
-              subList.remove(sub.id)
-              pop()
+              subList.remove(sub.id);
+              pop();
             }}
             shortcut={{ modifiers: ["opt"], key: "r" }}
           />
         </ActionPanel>
       }
     />
-  )
+  );
 }

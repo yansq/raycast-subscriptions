@@ -1,17 +1,17 @@
-import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api"
-import { useForm, FormValidation } from "@raycast/utils"
-import { useSubList } from "./useSubList"
-import { nanoid } from "nanoid"
+import { Action, ActionPanel, Form, showToast, Toast, useNavigation } from "@raycast/api";
+import { useForm, FormValidation } from "@raycast/utils";
+import { useSubList } from "./useSubList";
+import { nanoid } from "nanoid";
 
-import type { Subscription } from "./types"
+import type { Subscription } from "./types";
 
 type SubscriptoinForm = Pick<Subscription, "name" | "addDate" | "cycle" | "website" | "autoRenew"> & {
-  price: string
-}
+  price: string;
+};
 
 export default function addSubForm() {
-  const { pop } = useNavigation()
-  const subList = useSubList()
+  const { pop } = useNavigation();
+  const subList = useSubList();
 
   const { handleSubmit, itemProps } = useForm<SubscriptoinForm>({
     onSubmit(values) {
@@ -19,32 +19,32 @@ export default function addSubForm() {
         ...values,
         price: Number(values.price),
         id: nanoid(),
-      }
-      subList.add(newSub)
+      };
+      subList.add(newSub);
 
       showToast({
         style: Toast.Style.Success,
         title: "Success!",
         message: `Subscription ${values.name} created`,
       });
-      pop()
+      pop();
     },
     validation: {
       name: FormValidation.Required,
       price: (value) => {
         if (value?.toString().length == 0) {
-          return "Price should't be empty!"
+          return "Price should't be empty!";
         } else if (isNaN(Number(value))) {
-          return "Price should be a number!"
+          return "Price should be a number!";
         }
-      }
-    }
-  })
+      },
+    },
+  });
 
   function getToday(): Date {
-    let today = new Date()
-    today.setHours(0, 0, 0, 0)
-    return today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
   }
 
   return (
@@ -66,5 +66,5 @@ export default function addSubForm() {
       <Form.Checkbox defaultValue={false} id="autoRenew" title="Auto-renewable" label="" />
       <Form.TextField id="website" title="Website" />
     </Form>
-  )
+  );
 }
