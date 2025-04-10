@@ -26,7 +26,7 @@ export function getNextPaymentDate(subscription: Subscription): Date {
 
   // 计算下一次扣费日期
   const nextPayment = new Date(addDate);
-  nextPayment.setMonth(addDate.getMonth() + (cyclesPassed + 1) * cycleMonths);
+  nextPayment.setMonth(addDate.getMonth() + cyclesPassed * cycleMonths);
 
   // 如果当前日期已经超过下一次扣费日期，则再加一个周期
   if (currentDate > nextPayment) {
